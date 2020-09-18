@@ -1,6 +1,7 @@
 package com.hogwarts.demo.controller;
 
 
+import com.hogwarts.demo.common.ServiceException;
 import com.hogwarts.demo.dto.UserDto;
 import com.hogwarts.demo.service.HogwartsTestUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class HogwartsTestUserController {
     @PostMapping("login")
     public String login(@RequestBody UserDto userDto){
         String result = hogwartsTestUserService.login(userDto);
+        if (userDto.getName().contains("error")){
+            ServiceException.throwEx("用户名中含有error");
+
+        }
         return "成功" + result;
     }
 
